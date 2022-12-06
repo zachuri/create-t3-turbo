@@ -1,11 +1,6 @@
 import React from "react";
 
-import {
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FlashList } from "@shopify/flash-list";
@@ -13,6 +8,7 @@ import type { inferProcedureOutput } from "@trpc/server";
 import type { AppRouter } from "@acme/api";
 
 import { trpc } from "../utils/trpc";
+import { supabase } from "../lib/supabase";
 
 const PostCard: React.FC<{
   post: inferProcedureOutput<AppRouter["post"]["all"]>[number];
@@ -97,8 +93,18 @@ export const HomeScreen = () => {
             </TouchableOpacity>
           )}
         />
-
         <CreatePost />
+
+        <TouchableOpacity
+          className="mt-5 rounded bg-[#cc66ff] p-2"
+          onPress={async () => {
+            const { error } = await supabase.auth.signOut();
+          }}
+        >
+          <Text className="p-2 text-center font-semibold text-white">
+            Sign Out
+          </Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

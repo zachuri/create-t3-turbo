@@ -38,6 +38,7 @@ export const AuthScreen = () => {
         password: password,
       });
       if (error) Alert.alert(error.message);
+      setSignIn(true);
     }
   }
 
