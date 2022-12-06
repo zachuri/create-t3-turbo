@@ -6,34 +6,39 @@ import {
   TouchableWithoutFeedback,
   View,
   Keyboard,
+  Alert,
 } from "react-native";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
+import { supabase } from "../lib/supabase";
 
 export const AuthScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [signIn, setSignIn] = useState(true);
 
   async function signInWithEmail() {
-    console.log("SUBMIT SIGN IN");
-    // setLoading(true);
-    // const { error } = await supabase.auth.signInWithPassword({
-    //   email: email,
-    //   password: password
-    // });
-    // if (error) Alert.alert(error.message);
-    // setLoading(false);
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+    if (error) Alert.alert(error.message);
+    setLoading(false);
   }
 
   async function signUpWithEmail() {
-    console.log("SUBMIT SIGN UP");
-    // setLoading(true); const { error } = await supabase.auth.signUp({
-    //   email: email,
-    //   password: password
-    // });
-    // if (error) Alert.alert(error.message);
-    // setLoading(false);
+    if (password !== rePassword) {
+      Alert.alert("Passwords don't match");
+    } else {
+      setLoading(true);
+      const { error } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+      });
+      if (error) Alert.alert(error.message);
+    }
   }
 
   return (
@@ -60,6 +65,7 @@ export const AuthScreen = () => {
                 className="mb-2 rounded border-2 border-gray-500 p-2 text-white"
                 placeholder="Email"
                 placeholderTextColor={"gray"}
+                onChangeText={(text) => setEmail(text)}
               />
             </View>
           </TouchableWithoutFeedback>
@@ -75,11 +81,13 @@ export const AuthScreen = () => {
                 className="mb-2 rounded border-2 border-gray-500 p-2 text-white"
                 placeholder="Password"
                 placeholderTextColor={"gray"}
+                onChangeText={(text) => setPassword(text)}
+                secureTextEntry={true}
               />
             </View>
           </TouchableWithoutFeedback>
 
-          {/* For Sign Up */}
+          {/* For Sign Up Re Enter Password*/}
           {!signIn && (
             <View>
               <Text className="text-2xl text-white">Re-enter Password</Text>
@@ -92,6 +100,8 @@ export const AuthScreen = () => {
                     className="mb-2 rounded border-2 border-gray-500 p-2 text-white"
                     placeholder="Password"
                     placeholderTextColor={"gray"}
+                    onChangeText={(text) => setRePassword(text)}
+                    secureTextEntry={true}
                   />
                 </View>
               </TouchableWithoutFeedback>
