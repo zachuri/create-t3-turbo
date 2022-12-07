@@ -25,7 +25,9 @@ export const App = () => {
   return (
     <TRPCProvider>
       <SafeAreaProvider>
-        {!session ? <AuthScreen /> : <ProfileScreen session={session}/>}
+        {/* {!session ? <AuthScreen /> : <ProfileScreen session={session}/>} */}
+        {/* Later make session a provider that is global */}
+        {!session ? <AuthScreen /> : <HomeScreen session={session} />}
         <StatusBar />
       </SafeAreaProvider>
     </TRPCProvider>

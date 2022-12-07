@@ -9,6 +9,7 @@ import type { AppRouter } from "@acme/api";
 
 import { trpc } from "../utils/trpc";
 import { supabase } from "../lib/supabase";
+import { Session } from "@supabase/supabase-js";
 
 const PostCard: React.FC<{
   post: inferProcedureOutput<AppRouter["post"]["all"]>[number];
@@ -21,7 +22,7 @@ const PostCard: React.FC<{
   );
 };
 
-const CreatePost: React.FC = () => {
+const CreatePost: React.FC<{ userId: string }> = ({ userId }) => {
   const utils = trpc.useContext();
   const { mutate } = trpc.post.create.useMutation({
     async onSuccess() {
@@ -47,9 +48,11 @@ const CreatePost: React.FC = () => {
       <TouchableOpacity
         className="rounded bg-[#cc66ff] p-2"
         onPress={() => {
+          console.log("USER ID" + userId);
           mutate({
             title,
             content,
+            userId,
           });
         }}
       >
@@ -59,7 +62,7 @@ const CreatePost: React.FC = () => {
   );
 };
 
-export const HomeScreen = () => {
+export const HomeScreen: React.FC<{ session: Session }> = ({ session }) => {
   const postQuery = trpc.post.all.useQuery();
   const [showPost, setShowPost] = React.useState<string | null>(null);
 
@@ -69,6 +72,12 @@ export const HomeScreen = () => {
         <Text className="mx-auto pb-2 text-5xl font-bold text-white">
           Create <Text className="text-[#cc66ff]">T3</Text> Turbo
         </Text>
+        <View className="py-2">
+          <Text className="text-xl text-white">ID: {session?.user.id}</Text>
+          <Text className="text-xl text-white">
+            Email: {session?.user.email}
+          </Text>
+        </View>
 
         <View className="py-2">
           {showPost ? (
@@ -88,12 +97,14 @@ export const HomeScreen = () => {
           estimatedItemSize={20}
           ItemSeparatorComponent={() => <View className="h-2" />}
           renderItem={(p) => (
-            <TouchableOpacity onPress={() => setShowPost(p.item.id)}>
+            <TouchableOpacity
+              onPress={() => setShowPost(p.item.id as unknown as string)}
+            >
               <PostCard post={p.item} />
             </TouchableOpacity>
           )}
         />
-        <CreatePost />
+        <CreatePost userId={session?.user.id} />
 
         <TouchableOpacity
           className="mt-5 rounded bg-[#cc66ff] p-2"
