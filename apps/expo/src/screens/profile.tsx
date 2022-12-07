@@ -12,9 +12,84 @@ import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import { Session } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
 
-export const ProfileScreen: React.FC<{ session: Session | null }> = ({
-  session,
-}) => {
+export const ProfileScreen: React.FC<{ session: Session }> = ({ session }) => {
+  const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState("");
+  const [full_name, setFull_Name] = useState("");
+  const [website, setWebsite] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState("");
+
+  useEffect(() => {
+    if (session) getProfile();
+  }, [session]);
+
+  async function getProfile() {
+    try {
+      setLoading(true);
+      if (!session?.user) throw new Error("No user on the session!");
+
+      const { data, error, status } = await supabase
+        .from("profiles")
+        .select(`username, full_name, website, avatar_url`)
+        .eq("id", session?.user.id)
+        .single();
+      if (error && status !== 406) {
+        throw error;
+      }
+
+      if (data) {
+        setUsername(data.username);
+        setWebsite(data.website);
+        setAvatarUrl(data.avatar_url);
+        setFull_Name(data.full_name);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        Alert.alert(error.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function updateProfile({
+    username,
+    full_name,
+    website,
+    avatar_url,
+  }: {
+    username: string;
+    full_name: string;
+    website: string;
+    avatar_url: string;
+  }) {
+    try {
+      setLoading(true);
+      if (!session?.user) throw new Error("No user on the session!");
+
+      const updates = {
+        id: session?.user.id,
+        username,
+        full_name,
+        website,
+        avatar_url,
+        updated_at: new Date(),
+      };
+
+      const { error } = await supabase.from("profiles").upsert(updates);
+
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        Alert.alert(error.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <SafeAreaView className="bg-[#2e026d] bg-gradient-to-b from-[#2e026d] to-[#15162c]">
       <View className="mx-auto h-full w-full p-4">
@@ -28,6 +103,48 @@ export const ProfileScreen: React.FC<{ session: Session | null }> = ({
             Email: {session?.user.email}
           </Text>
         </View>
+        <View>
+          <TextInput
+            className="mb-2 rounded text-xl text-white"
+            placeholder={full_name || "Set/Update Full Name"}
+            placeholderTextColor={"white"}
+            onChangeText={(text) => setFull_Name(text)}
+          />
+        </View>
+
+        <View>
+          <TextInput
+            className="mb-2 rounded text-xl text-white"
+            placeholder={username || "Set/Update Username"}
+            placeholderTextColor={"white"}
+            onChangeText={(text) => setUsername(text)}
+          />
+        </View>
+        <View>
+          <TextInput
+            className="mb-2 rounded text-xl text-white"
+            placeholder={website || "Set/Edit website"}
+            placeholderTextColor={"white"}
+            onChangeText={(text) => setWebsite(text)}
+          />
+        </View>
+
+        <TouchableOpacity
+          onPress={() =>
+            updateProfile({
+              username,
+              full_name,
+              website,
+              avatar_url: avatarUrl,
+            })
+          }
+          className="mt-5 rounded bg-[#cc66ff] p-2"
+        >
+          <Text className="p-2 text-center font-semibold text-white">
+            Update
+          </Text>
+        </TouchableOpacity>
+
         <TouchableOpacity
           className="mt-5 rounded bg-[#cc66ff] p-2"
           onPress={async () => {

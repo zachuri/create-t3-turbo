@@ -37,7 +37,7 @@ export const AuthScreen = () => {
         email: email,
         password: password,
       });
-      if (error) Alert.alert(error.message)
+      if (error) Alert.alert(error.message);
       setSignIn(true);
     }
   }
