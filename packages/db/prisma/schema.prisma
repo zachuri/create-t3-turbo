@@ -21,11 +21,10 @@ model Post {
 
 model User {
   id              String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email           String  @unique
-  full_name       String
-  username        String
-  avatar_url      String
-  website         String
+  full_name       String?   
+  username        String?  
+  avatar_url      String?  
+  website         String?  
   updated_at      DateTime @default(now())
   posts          Post[]
   // created_at      DateTime @default(now())
