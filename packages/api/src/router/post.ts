@@ -3,9 +3,9 @@ import { z } from "zod";
 
 export const postRouter = router({
   all: publicProcedure
-    .input(z.object({ userId: z.string().uuid() }))
+    .input(z.object({ user_id: z.string().uuid() }))
     .query(({ ctx, input }) => {
-      return ctx.prisma.post.findMany({ where: { userId: input.userId } });
+      return ctx.prisma.post.findMany({ where: { user_id: input.user_id } });
     }),
   byId: publicProcedure.input(z.number()).query(({ ctx, input }) => {
     return ctx.prisma.post.findFirst({ where: { id: input } });
