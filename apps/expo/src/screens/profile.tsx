@@ -11,13 +11,16 @@ import {
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
 import { Session } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
+import { useAuthSession } from "../utils/auth-context";
 
-export const ProfileScreen: React.FC<{ session: Session }> = ({ session }) => {
+export const ProfileScreen = () => {
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
   const [full_name, setFull_Name] = useState("");
   const [website, setWebsite] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
+
+  const session = useAuthSession();
 
   useEffect(() => {
     if (session) getProfile();
@@ -29,7 +32,7 @@ export const ProfileScreen: React.FC<{ session: Session }> = ({ session }) => {
       if (!session?.user) throw new Error("No user on the session!");
 
       const { data, error, status } = await supabase
-        .from("profiles")
+        .from("User")
         .select(`username, full_name, website, avatar_url`)
         .eq("id", session?.user.id)
         .single();
@@ -76,7 +79,7 @@ export const ProfileScreen: React.FC<{ session: Session }> = ({ session }) => {
         updated_at: new Date(),
       };
 
-      const { error } = await supabase.from("profiles").upsert(updates);
+      const { error } = await supabase.from("User").upsert(updates);
 
       if (error) {
         throw error;
