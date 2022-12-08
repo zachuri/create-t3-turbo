@@ -23,7 +23,7 @@ export const App = () => {
   }, []);
 
   return (
-    <TRPCProvider>
+    <TRPCProvider authToken={session?.access_token as string}>
       <SafeAreaProvider>
         {/* {!session ? <AuthScreen /> : <ProfileScreen session={session}/>} */}
         {/* Later make session a provider that is global */}

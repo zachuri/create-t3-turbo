@@ -26,20 +26,29 @@ const getBaseUrl = () => {
  * A wrapper for your app that provides the TRPC context.
  * Use only in _app.tsx
  */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 import { transformer } from "@acme/api/transformer";
+import { supabase } from "../lib/supabase";
+import { Session } from "@supabase/supabase-js";
+import { Text } from "react-native";
 
-export const TRPCProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const TRPCProvider: React.FC<{
+  children: React.ReactNode;
+  authToken: string | null;
+}> = ({ children, authToken }) => {
   const [queryClient] = React.useState(() => new QueryClient());
   const [trpcClient] = React.useState(() =>
     trpc.createClient({
       transformer,
       links: [
         httpBatchLink({
+          headers() {
+            return {
+              Authorization: authToken || "",
+            };
+          },
           url: `${getBaseUrl()}/api/trpc`,
         }),
       ],
@@ -51,4 +60,28 @@ export const TRPCProvider: React.FC<{ children: React.ReactNode }> = ({
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </trpc.Provider>
   );
+};
+
+export type TRPCAuthContextProps = {
+  children: React.ReactNode;
+};
+
+export const TRPCAuthContext: React.FC<TRPCAuthContextProps> = ({
+  children,
+}) => {
+  // minimal example on how to set the token in the provider
+  const [authToken, setAuthToken] = React.useState<string | null>(null);
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setAuthToken(session?.access_token as string | null);
+    });
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setAuthToken(session?.access_token as string | null);
+    });
+  }, []);
+
+  if (!authToken) return <Text>Loading</Text>;
+
+  return <TRPCProvider authToken={authToken}>{children}</TRPCProvider>;
 };

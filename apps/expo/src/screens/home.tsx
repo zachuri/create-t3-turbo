@@ -22,7 +22,7 @@ const PostCard: React.FC<{
   );
 };
 
-const CreatePost: React.FC<{ userId: string }> = ({ userId }) => {
+const CreatePost: React.FC<{ user_id: string }> = ({ user_id }) => {
   const utils = trpc.useContext();
   const { mutate } = trpc.post.create.useMutation({
     async onSuccess() {
@@ -48,11 +48,10 @@ const CreatePost: React.FC<{ userId: string }> = ({ userId }) => {
       <TouchableOpacity
         className="rounded bg-[#cc66ff] p-2"
         onPress={() => {
-          console.log("USER ID" + userId);
           mutate({
             title,
             content,
-            userId,
+            user_id,
           });
         }}
       >
@@ -63,7 +62,7 @@ const CreatePost: React.FC<{ userId: string }> = ({ userId }) => {
 };
 
 export const HomeScreen: React.FC<{ session: Session }> = ({ session }) => {
-  const postQuery = trpc.post.all.useQuery();
+  const postQuery = trpc.post.all.useQuery({ user_id: session.user.id });
   const [showPost, setShowPost] = React.useState<string | null>(null);
 
   return (
@@ -104,7 +103,7 @@ export const HomeScreen: React.FC<{ session: Session }> = ({ session }) => {
             </TouchableOpacity>
           )}
         />
-        <CreatePost userId={session?.user.id} />
+        <CreatePost user_id={session?.user.id} />
 
         <TouchableOpacity
           className="mt-5 rounded bg-[#cc66ff] p-2"

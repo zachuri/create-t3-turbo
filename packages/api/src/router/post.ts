@@ -15,7 +15,7 @@ export const postRouter = router({
       z.object({
         title: z.string(),
         content: z.string(),
-        userId: z.string().uuid(),
+        user_id: z.string().uuid(),
       }),
     )
     .mutation(({ ctx, input }) => {
