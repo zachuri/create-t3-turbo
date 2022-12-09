@@ -4,32 +4,19 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Session } from "@supabase/supabase-js";
 import { supabase } from "./lib/supabase";
 import Navigation from "./navigation";
+import { TRPCAuthContextProvider, TRPCProvider } from "./utils/trpc";
 import { AuthContextProvider } from "./utils/auth-context";
 
 export const App = () => {
-  const [session, setSession] = useState<Session | null>(null);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-  }, []);
-
   return (
-    //  <TrpcAuthContextProvider>
-
-    // Created our own Provider
-    // Allows us to pass the user data between screens
-    <AuthContextProvider>
+    // Create my own trpc auth context provider
+    // Get session from supabase, async storage, useContext for the session/ user
+    // checkout ../utils/trpc for more
+    <TRPCAuthContextProvider>
       <SafeAreaProvider>
         <Navigation />
         <StatusBar />
       </SafeAreaProvider>
-    </AuthContextProvider>
-    // </TrpcAuthContextProvider>
+    </TRPCAuthContextProvider>
   );
 };
