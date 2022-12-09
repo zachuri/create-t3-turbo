@@ -9,15 +9,11 @@ import * as React from "react";
 
 import { RootStackParamList } from "../types/navigation";
 import LinkingConfiguration from "./LinkingConfiguration";
-import { supabase } from "../lib/supabase";
-import { Session } from "@supabase/supabase-js";
 import { ProfileScreen } from "../screens/profile";
-import { TestScreen } from "../screens/test";
-import { AuthScreen } from "../screens/auth/auth";
 import { useAuthUser } from "../utils/auth-context";
-import Loading from "../screens/auth/loading";
-import LoginScreen from "../screens/auth/login";
 import LogoutButton from "../components/LogoutButton";
+import { SignInScreen } from "../screens/auth/signin";
+import { SignUpScreen } from "../screens/auth/signup";
 
 export default function Navigation() {
   return (
@@ -40,12 +36,33 @@ const RootNavigator = () => {
   return (
     <Stack.Navigator>
       {!user ? (
-        <Stack.Screen name="Auth" component={AuthScreen} />
+        // <Stack.Screen name="Auth" component={AuthScreen} />
+        <>
+          <Stack.Screen
+            name="SignIn"
+            component={SignInScreen}
+            options={{
+              headerShown: false,
+              headerTitle: "Sign In",
+            }}
+          />
+          <Stack.Screen
+            name="SignUp"
+            component={SignUpScreen}
+            options={{
+              headerShown: false,
+              headerTitle: "Sign Up",
+            }}
+          />
+        </>
       ) : (
         <Stack.Screen
           name="MyProfile"
           component={ProfileScreen}
-          options={{ headerRight: LogoutButton }}
+          options={{
+            headerShown: false,
+            headerRight: LogoutButton,
+          }}
         />
       )}
     </Stack.Navigator>
