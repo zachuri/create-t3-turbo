@@ -15,26 +15,26 @@ const linking: LinkingOptions<RootStackParamList> = {
     screens: {
       Root: {
         screens: {
-          Login: {
-            screens: {
-              TestScreen: "Test",
-            },
-          },
-          SignUp: {
-            screens: {
-              SignUpScreen: "SignUp",
-            },
-          },
-          Home: {
-            screens: {
-              HomeScreen: "Home",
-            },
-          },
-          Profile: {
-            screens: {
-              ProfileScreen: "Profile",
-            },
-          },
+          // Login: {
+          //   screens: {
+          //     TestScreen: "Test",
+          //   },
+          // },
+          // SignUp: {
+          //   screens: {
+          //     SignUpScreen: "SignUp",
+          //   },
+          // },
+          // Home: {
+          //   screens: {
+          //     HomeScreen: "Home",
+          //   },
+          // },
+          // Profile: {
+          //   screens: {
+          //     ProfileScreen: "Profile",
+          //   },
+          // },
         },
       },
     },
