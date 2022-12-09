@@ -13,10 +13,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { FlashList } from "@shopify/flash-list";
 import type { inferProcedureOutput } from "@trpc/server";
 import type { AppRouter } from "@acme/api";
-
 import { trpc } from "../utils/trpc";
-import { supabase } from "../lib/supabase";
-import { Session } from "@supabase/supabase-js";
+// import { useAuthSession } from "../utils/auth-context";
+import { useAuthSession } from "../utils/trpc";
 
 const PostCard: React.FC<{
   post: inferProcedureOutput<AppRouter["post"]["all"]>[number];
@@ -74,8 +73,12 @@ const CreatePost: React.FC<{ user_id: string }> = ({ user_id }) => {
   );
 };
 
-export const HomeScreen: React.FC<{ session: Session }> = ({ session }) => {
-  const postQuery = trpc.post.all.useQuery({ user_id: session.user.id });
+export const HomeScreen = () => {
+  const session = useAuthSession();
+
+  const postQuery = trpc.post.all.useQuery({
+    user_id: session?.user.id as string,
+  });
   const [showPost, setShowPost] = React.useState<string | null>(null);
 
   return (
@@ -116,18 +119,7 @@ export const HomeScreen: React.FC<{ session: Session }> = ({ session }) => {
             </TouchableOpacity>
           )}
         />
-        <CreatePost user_id={session?.user.id} />
-
-        <TouchableOpacity
-          className="mt-5 rounded bg-[#cc66ff] p-2"
-          onPress={async () => {
-            const { error } = await supabase.auth.signOut();
-          }}
-        >
-          <Text className="p-2 text-center font-semibold text-white">
-            Sign Out
-          </Text>
-        </TouchableOpacity>
+        <CreatePost user_id={session?.user.id as string} />
       </View>
     </SafeAreaView>
   );

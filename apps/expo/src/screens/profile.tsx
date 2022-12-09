@@ -9,9 +9,9 @@ import {
   Alert,
 } from "react-native";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
-import { Session } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
-import { useAuthSession } from "../utils/auth-context";
+// import { useAuthSession } from "../utils/auth-context";
+import { useAuthSession } from "../utils/trpc";
 
 export const ProfileScreen = () => {
   const [loading, setLoading] = useState(true);
