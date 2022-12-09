@@ -4,19 +4,20 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SignInScreen } from "../screens/auth/signin";
 import { SignUpScreen } from "../screens/auth/signup";
 
-const AuthStack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 const Auth = () => {
   return (
-    <AuthStack.Navigator
+    <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        gestureDirection: "vertical",
+        // gestureEnabled: true,
+        // animationTypeForReplace: user ? "pop" : "push",
       }}
     >
-      <AuthStack.Screen name="Login" component={SignInScreen} />
-      <AuthStack.Screen name="Register" component={SignUpScreen} />
+      <Stack.Screen name="SignIn" component={SignInScreen} />
+      <Stack.Screen name="SignUp" component={SignUpScreen} />
       {/* <AuthStack.Screen name="ForgetPassword" component={ForgetPassword} /> */}
-    </AuthStack.Navigator>
+    </Stack.Navigator>
   );
 };
 

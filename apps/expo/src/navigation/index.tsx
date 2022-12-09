@@ -32,8 +32,7 @@ const RootNavigator = () => {
   return (
     <>
       {session?.access_token === null && <Loading />}
-      {!user && <Auth /> }
-      {user && <Main />}
+      {!user ? (<Auth />) : ( <Main />)}
     </>
   );
 };

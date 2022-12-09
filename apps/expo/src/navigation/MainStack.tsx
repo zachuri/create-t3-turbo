@@ -6,7 +6,6 @@ import { MainBottomTabNavigator } from "./MainTabs";
 import Loading from "../screens/auth/loading";
 
 const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
 const Main = () => {
@@ -19,6 +18,10 @@ const DrawerNavigator = () => {
       screenOptions={{
         swipeEnabled: true,
         swipeEdgeWidth: 1000,
+        headerShown: false,
+        // drawerStyle: {
+        //   width: Dimensions.get("window").width / 1.25,
+        // },
       }}
     >
       <Drawer.Screen name="MainStack" component={MainStackNavigator} />
@@ -33,6 +36,7 @@ const MainStackNavigator = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
+        animation: "none",
       }}
     >
       <Stack.Screen
