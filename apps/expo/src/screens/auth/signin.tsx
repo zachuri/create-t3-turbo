@@ -1,4 +1,5 @@
 import { NavigationProp } from "@react-navigation/native";
+import * as AuthSession from "expo-auth-session";
 import React, { useState } from "react";
 import {
   Text,
@@ -10,7 +11,7 @@ import {
   Alert,
 } from "react-native";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
-import { supabase } from "../../lib/supabase";
+import { supabase, supabaseUrl } from "../../lib/supabase";
 
 export interface Prop {
   navigation: NavigationProp<any, any>;
@@ -19,7 +20,6 @@ export interface Prop {
 export const SignInScreen: React.FC<Prop> = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [rePassword, setRePassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function signInWithEmail() {
