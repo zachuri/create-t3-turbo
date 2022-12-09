@@ -10,10 +10,12 @@ import * as React from "react";
 import { RootStackParamList } from "../types/navigation";
 import LinkingConfiguration from "./LinkingConfiguration";
 import { ProfileScreen } from "../screens/profile";
-import { useAuthUser } from "../utils/auth-context";
 import LogoutButton from "../components/LogoutButton";
 import { SignInScreen } from "../screens/auth/signin";
 import { SignUpScreen } from "../screens/auth/signup";
+import { HomeScreen } from "../screens/home";
+import { useAuthUser } from "../utils/trpc";
+// import { useAuthUser } from "../utils/auth-context";
 
 export default function Navigation() {
   return (
@@ -56,14 +58,15 @@ const RootNavigator = () => {
           />
         </>
       ) : (
-        <Stack.Screen
-          name="MyProfile"
-          component={ProfileScreen}
-          options={{
-            headerShown: false,
-            headerRight: LogoutButton,
-          }}
-        />
+        <Stack.Screen name="Home" component={HomeScreen} />
+        // <Stack.Screen
+        //   name="MyProfile"
+        //   component={ProfileScreen}
+        //   options={{
+        //     headerShown: false,
+        //     headerRight: LogoutButton,
+        //   }}
+        // />
       )}
     </Stack.Navigator>
   );
