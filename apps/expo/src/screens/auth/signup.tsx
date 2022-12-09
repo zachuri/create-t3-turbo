@@ -1,3 +1,4 @@
+import { NavigationProp } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
   Text,
@@ -9,24 +10,17 @@ import {
   Alert,
 } from "react-native";
 import { SafeAreaView, useSafeAreaFrame } from "react-native-safe-area-context";
-import { supabase } from "../lib/supabase";
+import { supabase } from "../../lib/supabase";
 
-export const AuthScreen = () => {
+export interface Prop {
+  navigation: NavigationProp<any, any>;
+}
+
+export const SignUpScreen: React.FC<Prop> = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [signIn, setSignIn] = useState(true);
-
-  async function signInWithEmail() {
-    setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
-    if (error) Alert.alert(error.message);
-    setLoading(false);
-  }
 
   async function signUpWithEmail() {
     if (password !== rePassword) {
@@ -38,7 +32,7 @@ export const AuthScreen = () => {
         password: password,
       });
       if (error) Alert.alert(error.message);
-      setSignIn(true);
+      navigation.navigate("SignIn");
     }
   }
 
@@ -47,11 +41,7 @@ export const AuthScreen = () => {
       <View className="mx-auto h-full w-full p-4">
         {/* Title */}
         <View className="py-2">
-          {signIn ? (
-            <Text className="text-4xl text-white">Sign In</Text>
-          ) : (
-            <Text className="text-4xl text-white">Sign Up</Text>
-          )}
+          <Text className="text-4xl text-white">Sign Up</Text>
         </View>
 
         <View className="mx-2">
@@ -89,30 +79,28 @@ export const AuthScreen = () => {
           </TouchableWithoutFeedback>
 
           {/* For Sign Up Re Enter Password*/}
-          {!signIn && (
-            <View>
-              <Text className="text-2xl text-white">Re-enter Password</Text>
-              <TouchableWithoutFeedback
-                onPress={Keyboard.dismiss}
-                accessible={false}
-              >
-                <View className="py-2">
-                  <TextInput
-                    className="mb-2 rounded border-2 border-gray-500 p-2 text-white"
-                    placeholder="Password"
-                    placeholderTextColor={"gray"}
-                    onChangeText={(text) => setRePassword(text)}
-                    secureTextEntry={true}
-                  />
-                </View>
-              </TouchableWithoutFeedback>
-            </View>
-          )}
+          <View>
+            <Text className="text-2xl text-white">Re-enter Password</Text>
+            <TouchableWithoutFeedback
+              onPress={Keyboard.dismiss}
+              accessible={false}
+            >
+              <View className="py-2">
+                <TextInput
+                  className="mb-2 rounded border-2 border-gray-500 p-2 text-white"
+                  placeholder="Password"
+                  placeholderTextColor={"gray"}
+                  onChangeText={(text) => setRePassword(text)}
+                  secureTextEntry={true}
+                />
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
 
           <TouchableOpacity
             className="mt-5 rounded bg-[#cc66ff] p-2"
             onPress={() => {
-              signIn ? signInWithEmail() : signUpWithEmail();
+              signUpWithEmail();
             }}
           >
             <Text className="p-2 text-center font-semibold text-white">
@@ -123,29 +111,16 @@ export const AuthScreen = () => {
 
         {/* Sign Up / In */}
         <View className="mt-20">
-          {signIn ? (
-            <TouchableOpacity
-              className="rounded p-2"
-              onPress={() => {
-                setSignIn(!signIn);
-              }}
-            >
-              <Text className="p-2 text-center font-semibold text-blue-500">
-                Sign Up?
-              </Text>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              className="rounded  p-2"
-              onPress={() => {
-                setSignIn(!signIn);
-              }}
-            >
-              <Text className="p-2 text-center font-semibold text-blue-500">
-                Sign In?
-              </Text>
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity
+            className="rounded p-2"
+            onPress={() => {
+              navigation.navigate("SignIn");
+            }}
+          >
+            <Text className="p-2 text-center font-semibold text-blue-500">
+              Already have and account? Sign in
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>

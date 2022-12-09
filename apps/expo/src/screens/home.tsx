@@ -1,6 +1,13 @@
 import React from "react";
 
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FlashList } from "@shopify/flash-list";
@@ -34,30 +41,36 @@ const CreatePost: React.FC<{ user_id: string }> = ({ user_id }) => {
   const [content, onChangeContent] = React.useState("");
 
   return (
-    <View className="flex flex-col border-t-2 border-gray-500 p-4">
-      <TextInput
-        className="mb-2 rounded border-2 border-gray-500 p-2 text-white"
-        onChangeText={onChangeTitle}
-        placeholder="Title"
-      />
-      <TextInput
-        className="mb-2 rounded border-2 border-gray-500 p-2 text-white"
-        onChangeText={onChangeContent}
-        placeholder="Content"
-      />
-      <TouchableOpacity
-        className="rounded bg-[#cc66ff] p-2"
-        onPress={() => {
-          mutate({
-            title,
-            content,
-            user_id,
-          });
-        }}
-      >
-        <Text className="font-semibold text-white">Publish post</Text>
-      </TouchableOpacity>
-    </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <View className="flex flex-col border-t-2 border-gray-500 p-4">
+        <TextInput
+          className="mb-2 rounded border-2 border-gray-500 p-2 text-white"
+          onChangeText={onChangeTitle}
+          placeholder="Title"
+          placeholderTextColor={"gray"}
+        />
+        <TextInput
+          className="mb-2 rounded border-2 border-gray-500 p-2 text-white"
+          onChangeText={onChangeContent}
+          placeholder="Content"
+          placeholderTextColor={"gray"}
+        />
+        <TouchableOpacity
+          className="rounded bg-[#cc66ff] p-2"
+          onPress={() => {
+            mutate({
+              title,
+              content,
+              user_id,
+            });
+          }}
+        >
+          <Text className="font-semibold text-white">Publish post</Text>
+        </TouchableOpacity>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
