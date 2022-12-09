@@ -5,9 +5,9 @@ import * as Solid from "react-native-heroicons/solid";
 import * as Outline from "react-native-heroicons/outline";
 import Loading from "../screens/auth/loading";
 
-export const Tabs = () => {
-  const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 
+export const MainBottomTabNavigator = () => {
   return (
     <Tab.Navigator
       initialRouteName="Home"
