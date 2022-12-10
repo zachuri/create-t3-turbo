@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Icon, IButtonProps } from "native-base";
+import { Button, Icon, IButtonProps, useColorModeValue } from "native-base";
 import { Feather } from "@expo/vector-icons";
 
 interface Props extends IButtonProps {
@@ -33,7 +33,7 @@ const MenuButton = ({ active, icon, children, ...props }: Props) => {
       bg={active ? undefined : "transparent"}
       variant="solid"
       justifyContent="flex-start"
-      leftIcon={<Icon as={Feather} name={icon} size="sm" opacity={0.5} />}
+      leftIcon={<Icon as={Feather} name={icon} size="sm" opacity={0.5} color={useColorModeValue("gray", "white")} />}
       {...props}
     >
       {children}

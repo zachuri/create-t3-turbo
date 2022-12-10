@@ -27,7 +27,7 @@ export const MainBottomTabNavigator = () => {
           }
         },
 
-        tabBarActiveTintColor: "#2e026d",
+        tabBarActiveTintColor: useColorModeValue("black", "white"),
         tabBarShowLabel: false,
         tabBarBackground: () => (
           <AnimatedColorBox
