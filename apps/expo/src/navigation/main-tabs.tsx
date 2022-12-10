@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { HomeScreen } from "../screens/home";
-import { ProfileScreen } from "../screens/profile";
+import { HomeScreen } from "../screens/home-screen";
+import { ProfileScreen } from "../screens/profile-screen";
 import * as Solid from "react-native-heroicons/solid";
 import * as Outline from "react-native-heroicons/outline";
-import Loading from "../screens/auth/loading";
+import Loading from "../screens/auth/loading-screen";
 
 const Tab = createBottomTabNavigator();
 

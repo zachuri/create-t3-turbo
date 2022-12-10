@@ -2,8 +2,8 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { MainBottomTabNavigator } from "./MainTabs";
-import Loading from "../screens/auth/loading";
+import { MainBottomTabNavigator } from "./main-tabs";
+import Loading from "../screens/auth/loading-screen";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();

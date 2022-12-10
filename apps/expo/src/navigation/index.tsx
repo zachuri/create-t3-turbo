@@ -6,9 +6,9 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { useAuthSession, useAuthUser } from "../utils/trpc";
-import Loading from "../screens/auth/loading";
-import Auth from "./AuthStack";
-import Main from "./MainStack";
+import Loading from "../screens/auth/loading-screen";
+import Auth from "./auth-stack";
+import Main from "./main-stack";
 
 export default function Navigation() {
   return (
