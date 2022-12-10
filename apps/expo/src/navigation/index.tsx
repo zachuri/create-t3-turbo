@@ -9,12 +9,15 @@ import { useAuthSession, useAuthUser } from "../utils/trpc";
 import Loading from "../screens/auth/loading-screen";
 import Auth from "./auth-stack";
 import Main from "./main-stack";
+import NativeBaseAppContainer from "../components/nativebase-container";
 
 export default function Navigation() {
   return (
     // <NavigationContainer linking={LinkingConfiguration}>
     <NavigationContainer>
-      <RootNavigator />
+      <NativeBaseAppContainer>
+        <RootNavigator />
+      </NativeBaseAppContainer>
     </NavigationContainer>
   );
 }
@@ -32,7 +35,7 @@ const RootNavigator = () => {
   return (
     <>
       {session?.access_token === null && <Loading />}
-      {!user ? (<Auth />) : ( <Main />)}
+      {!user ? <Auth /> : <Main />}
     </>
   );
 };
