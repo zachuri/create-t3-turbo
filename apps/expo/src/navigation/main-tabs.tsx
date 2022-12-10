@@ -16,7 +16,7 @@ export const MainBottomTabNavigator = () => {
           if (route.name === "Home") {
             if (focused) return <Solid.HomeIcon color={color} size={28} />;
             return <Outline.HomeIcon color={color} size={size} />;
-          } else if (route.name === "MyProfile") {
+          } else if (route.name === "Profile") {
             if (focused) return <Solid.UserIcon color={color} size={28} />;
             return <Outline.UserIcon color={color} size={size} />;
           } else if (route.name === "Loading") {
@@ -41,7 +41,7 @@ export const MainBottomTabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="MyProfile"
+        name="Profile"
         component={ProfileScreen}
         options={{
           headerShown: false,

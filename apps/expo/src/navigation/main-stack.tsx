@@ -4,6 +4,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { MainBottomTabNavigator } from "./main-tabs";
 import Loading from "../screens/auth/loading-screen";
+import Sidebar from "../components/sidebar";
+import { getFocusedRouteNameFromRoute, Route } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -23,10 +25,9 @@ const DrawerNavigator = () => {
         //   width: Dimensions.get("window").width / 1.25,
         // },
       }}
+      drawerContent={(props) => <Sidebar {...props} />}
     >
       <Drawer.Screen name="MainStack" component={MainStackNavigator} />
-      <Drawer.Screen name="TestScreen" component={Loading} />
-      <Drawer.Screen name="TestScreen2" component={Loading} />
     </Drawer.Navigator>
   );
 };
@@ -36,11 +37,10 @@ const MainStackNavigator = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        animation: "none",
       }}
     >
       <Stack.Screen
-        name="MainBottomTabNavigator"
+        name="Tabs"
         component={MainBottomTabNavigator}
       />
     </Stack.Navigator>
