@@ -1,9 +1,11 @@
 import React from "react";
-import { useColorModeValue, VStack, Text, Fab, Icon } from "native-base";
+import { useColorModeValue, VStack, Fab, Icon } from "native-base";
 import AnimatedColorBox from "../components/animated-color-box";
 import { trpc, useAuthSession } from "../utils/trpc";
-import TaskList from "../components/task-list";
+import TaskList from "../components/task/task-list";
 import { AntDesign } from "@expo/vector-icons";
+import NavBar from "../components/navbar";
+import MastHead from "../components/mast-head";
 
 const initialData = [
   {
@@ -18,7 +20,7 @@ const initialData = [
   },
 ];
 
-export const MainScreen = () => {
+export const TaskScreen = () => {
   const session = useAuthSession();
 
   const postQuery = trpc.post.all.useQuery({
@@ -72,51 +74,58 @@ export const MainScreen = () => {
   }, []);
 
   return (
-    <AnimatedColorBox
-      safeArea
-      flex={1}
-      bg={useColorModeValue("blue.50", "primary.900")}
-      p={7}
-    >
-      <VStack
-        flex={1}
-        space={1}
-        bg={useColorModeValue("warmGray.50", "primary.900")}
-        mt="-20px"
-        borderTopLeftRadius="20px"
-        borderTopRightRadius="20px"
-        pt="20px"
+    <>
+      <MastHead
+        title={"Task List"}
+        image={require("../../assets/notebook.png")}
       >
-        <TaskList
-          data={data}
-          onToggleItem={handleToggleTaskItem}
-          onChangeSubject={handleChangeTaskItemSubject}
-          onFinishEditing={handleFinishEditingTaskItem}
-          onPressLabel={handlePressTaskItemLabel}
-          onRemoveItem={handleRemoveItem}
-          editingItemId={editingItemId}
+        <NavBar />
+      </MastHead>
+      <AnimatedColorBox
+        flex={1}
+        bg={useColorModeValue("primary.400", "primary.900")}
+        w="full"
+      >
+        <VStack
+          flex={1}
+          space={1}
+          bg={useColorModeValue("primary.400", "primary.900")}
+          mt="-20px"
+          borderTopLeftRadius="20px"
+          borderTopRightRadius="20px"
+          pt="20px"
+        >
+          <TaskList
+            data={data}
+            onToggleItem={handleToggleTaskItem}
+            onChangeSubject={handleChangeTaskItemSubject}
+            onFinishEditing={handleFinishEditingTaskItem}
+            onPressLabel={handlePressTaskItemLabel}
+            onRemoveItem={handleRemoveItem}
+            editingItemId={editingItemId}
+          />
+        </VStack>
+        <Fab
+          position="absolute"
+          renderInPortal={false}
+          size="sm"
+          icon={<Icon color="white" as={<AntDesign name="plus" />} size="sm" />}
+          colorScheme={useColorModeValue("blue", "darkBlue")}
+          bg={useColorModeValue("blue.500", "blue.400")}
+          onPress={() => {
+            const id = Math.random().toString(16).slice(2);
+            setData([
+              {
+                id,
+                subject: "",
+                done: false,
+              },
+              ...data,
+            ]);
+            setEditingItemId(id);
+          }}
         />
-      </VStack>
-      <Fab
-        position="absolute"
-        renderInPortal={false}
-        size="sm"
-        icon={<Icon color="white" as={<AntDesign name="plus" />} size="sm" />}
-        colorScheme={useColorModeValue("blue", "darkBlue")}
-        bg={useColorModeValue("blue.500", "blue.400")}
-        onPress={() => {
-          const id = Math.random().toString(16).slice(2);
-          setData([
-            {
-              id,
-              subject: "",
-              done: false,
-            },
-            ...data,
-          ]);
-          setEditingItemId(id);
-        }}
-      />
-    </AnimatedColorBox>
+      </AnimatedColorBox>
+    </>
   );
 };

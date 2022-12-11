@@ -2,7 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { MainBottomTabNavigator } from "./main-tabs";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../components/drawer/sidebar";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();

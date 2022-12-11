@@ -3,7 +3,7 @@ import { HomeScreen } from "../screens/home-screen";
 import { ProfileScreen } from "../screens/profile-screen";
 import * as Solid from "react-native-heroicons/solid";
 import * as Outline from "react-native-heroicons/outline";
-import { MainScreen } from "../screens/weight-screen";
+import { MainScreen, TaskScreen } from "../screens/task-screen";
 import AnimatedColorBox from "../components/animated-color-box";
 import { useColorModeValue } from "native-base";
 
@@ -21,7 +21,7 @@ export const MainBottomTabNavigator = () => {
           } else if (route.name === "Profile") {
             if (focused) return <Solid.UserIcon color={color} size={28} />;
             return <Outline.UserIcon color={color} size={size} />;
-          } else if (route.name === "Weight") {
+          } else if (route.name === "Task") {
             if (focused) return <Solid.ScaleIcon color={color} size={28} />;
             return <Outline.ScaleIcon color={color} size={size} />;
           }
@@ -40,8 +40,8 @@ export const MainBottomTabNavigator = () => {
       })}
     >
       <Tab.Screen
-        name="Weight"
-        component={MainScreen}
+        name="Task"
+        component={TaskScreen}
         options={{
           headerShown: false,
         }}

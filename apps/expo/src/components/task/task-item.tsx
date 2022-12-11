@@ -91,7 +91,7 @@ const TaskItem = (props: Props) => {
         w="full"
         px={4}
         py={2}
-        bg={useColorModeValue("warmGray.50", "primary.900")}
+        bg={useColorModeValue("primary.400", "primary.900")}
       >
         <Box width={30} height={30} mr={2}>
           <Pressable onPress={onToggleCheckbox}>
