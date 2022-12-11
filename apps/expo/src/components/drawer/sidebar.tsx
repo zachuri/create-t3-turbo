@@ -24,7 +24,7 @@ const Sidebar = (props: DrawerContentComponentProps) => {
   const handlePressMenuMain = useCallback(() => {
     navigation.navigate("Home");
   }, [navigation]);
-  const handlePressMenuTest = useCallback(() => {
+  const handlePressMenuProfile = useCallback(() => {
     navigation.navigate("Profile");
   }, [navigation]);
 
@@ -69,11 +69,11 @@ const Sidebar = (props: DrawerContentComponentProps) => {
           Home
         </MenuButton>
         <MenuButton
-          active={currentRoute === "Test 1"}
-          onPress={handlePressMenuTest}
-          icon="info"
+          active={currentRoute === "Profile"}
+          onPress={handlePressMenuProfile}
+          icon="user"
         >
-          Test
+          Profile
         </MenuButton>
       </VStack>
       <Center>
