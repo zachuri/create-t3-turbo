@@ -11,13 +11,13 @@ import WeightList from "../components/weight/weight-list";
 const initialData = [
   {
     id: Math.random().toString(16).slice(2),
-    subject: "Buy movie tickets for Friday",
+    subject: "190",
     done: false,
     date: new Date("2022-12-04"),
   },
   {
     id: Math.random().toString(16).slice(2),
-    subject: "Make a React Native tutorial",
+    subject: "200",
     done: false,
     date: new Date("2022-12-04"),
   },
@@ -79,7 +79,7 @@ export const WeightScreen = () => {
   return (
     <>
       <MastHead title={"Weight"} image={require("../../assets/weight.png")}>
-        <NavBar />
+        {/* <NavBar /> */}
       </MastHead>
       <AnimatedColorBox
         flex={1}

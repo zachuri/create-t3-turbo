@@ -119,7 +119,7 @@ const WeightItem = (props: Props) => {
             strikethrough={isDone}
             onPress={onPressLabel}
           >
-            {subject}
+            {subject + " lbs"}
           </AnimatedTaskLabel>
         )}
       </HStack>
