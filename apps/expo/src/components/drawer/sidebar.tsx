@@ -9,8 +9,8 @@ import {
   useColorModeValue,
 } from "native-base";
 import { DrawerContentComponentProps } from "@react-navigation/drawer";
-import AnimatedColorBox from "./animated-color-box";
-import ThemeToggle from "./theme-toggle";
+import AnimatedColorBox from "../animated-color-box";
+import ThemeToggle from "../theme-toggle";
 import { Feather } from "@expo/vector-icons";
 import MenuButton from "./menu-button";
 
@@ -41,17 +41,17 @@ const Sidebar = (props: DrawerContentComponentProps) => {
             onPress={handlePressBackButton}
             borderRadius={100}
             variant="outline"
-            borderColor={useColorModeValue("blue.300", "darkBlue.700")}
+            borderColor={useColorModeValue("blue.300", "primary.700")}
             _icon={{
               as: Feather,
               name: "chevron-left",
               size: 6,
-              color: useColorModeValue("blue.800", "darkBlue.700"),
+              color: useColorModeValue("blue.800", "primary.700"),
             }}
           />
         </HStack>
         <Avatar
-          source={require("../../assets/cat.png")}
+          source={require("../../../assets/cat.png")}
           size="xl"
           borderRadius={100}
           mb={6}
