@@ -6,6 +6,7 @@ import {
 } from "react-native-gesture-handler";
 import { makeStyledComponent } from "../../utils/styled";
 import WeightItem from "./weight-item";
+import { Box, Heading, HStack, Text, useColorModeValue } from "native-base";
 
 const StyledView = makeStyledComponent(View);
 const StyledScrollView = makeStyledComponent(ScrollView);
@@ -121,22 +122,36 @@ export default function WeightList(props: WeightListProps) {
   const refScrollView = useRef(null);
 
   return (
-    <StyledScrollView ref={refScrollView} w="full">
-      <AnimatePresence>
-        {data.map((item) => (
-          <AnimatedTaskItem
-            key={item.id}
-            data={item}
-            simultaneousHandlers={refScrollView}
-            isEditing={item.id === editingItemId}
-            onToggleItem={onToggleItem}
-            onChangeSubject={onChangeSubject}
-            onFinishEditing={onFinishEditing}
-            onPressLabel={onPressLabel}
-            onRemove={onRemoveItem}
-          />
-        ))}
-      </AnimatePresence>
-    </StyledScrollView>
+    <>
+      <HStack>
+        <Box justifyContent={"center"} width={70} height={30} ml={4}>
+          <Heading color={useColorModeValue("primary.900", "primary.400")}>
+            Date
+          </Heading>
+        </Box>
+        <Box justifyContent={"center"} height={30} ml={3}>
+          <Heading color={useColorModeValue("primary.900", "primary.400")}>
+            Weight
+          </Heading>
+        </Box>
+      </HStack>
+      <StyledScrollView ref={refScrollView} w="full">
+        <AnimatePresence>
+          {data.map((item) => (
+            <AnimatedTaskItem
+              key={item.id}
+              data={item}
+              simultaneousHandlers={refScrollView}
+              isEditing={item.id === editingItemId}
+              onToggleItem={onToggleItem}
+              onChangeSubject={onChangeSubject}
+              onFinishEditing={onFinishEditing}
+              onPressLabel={onPressLabel}
+              onRemove={onRemoveItem}
+            />
+          ))}
+        </AnimatePresence>
+      </StyledScrollView>
+    </>
   );
 }
