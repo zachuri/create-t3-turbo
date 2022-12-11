@@ -6,21 +6,24 @@ import TaskList from "../components/task/task-list";
 import { AntDesign } from "@expo/vector-icons";
 import NavBar from "../components/navbar";
 import MastHead from "../components/mast-head";
+import WeightList from "../components/weight/weight-list";
 
 const initialData = [
   {
     id: Math.random().toString(16).slice(2),
     subject: "Buy movie tickets for Friday",
     done: false,
+    date: new Date("2022-12-04"),
   },
   {
     id: Math.random().toString(16).slice(2),
     subject: "Make a React Native tutorial",
     done: false,
+    date: new Date("2022-12-04"),
   },
 ];
 
-export const TaskScreen = () => {
+export const WeightScreen = () => {
   const session = useAuthSession();
 
   const postQuery = trpc.post.all.useQuery({
@@ -75,11 +78,8 @@ export const TaskScreen = () => {
 
   return (
     <>
-      <MastHead
-        title={"Task List"}
-        image={require("../../assets/notebook.png")}
-      >
-        {/* <NavBar /> */}
+      <MastHead title={"Weight"} image={require("../../assets/weight.png")}>
+        <NavBar />
       </MastHead>
       <AnimatedColorBox
         flex={1}
@@ -95,7 +95,7 @@ export const TaskScreen = () => {
           borderTopRightRadius="20px"
           pt="20px"
         >
-          <TaskList
+          <WeightList
             data={data}
             onToggleItem={handleToggleTaskItem}
             onChangeSubject={handleChangeTaskItemSubject}
@@ -119,6 +119,7 @@ export const TaskScreen = () => {
                 id,
                 subject: "",
                 done: false,
+                date: new Date(),
               },
               ...data,
             ]);

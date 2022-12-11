@@ -3,9 +3,10 @@ import { HomeScreen } from "../screens/home-screen";
 import { ProfileScreen } from "../screens/profile-screen";
 import * as Solid from "react-native-heroicons/solid";
 import * as Outline from "react-native-heroicons/outline";
-import { MainScreen, TaskScreen } from "../screens/task-screen";
+import { TaskScreen } from "../screens/task-screen";
 import AnimatedColorBox from "../components/animated-color-box";
 import { useColorModeValue } from "native-base";
+import { WeightScreen } from "../screens/weight-screen";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,6 +23,9 @@ export const MainBottomTabNavigator = () => {
             if (focused) return <Solid.UserIcon color={color} size={28} />;
             return <Outline.UserIcon color={color} size={size} />;
           } else if (route.name === "Task") {
+            if (focused) return <Solid.PencilIcon color={color} size={28} />;
+            return <Outline.PencilIcon color={color} size={size} />;
+          } else if (route.name === "Weight") {
             if (focused) return <Solid.ScaleIcon color={color} size={28} />;
             return <Outline.ScaleIcon color={color} size={size} />;
           }
@@ -49,6 +53,13 @@ export const MainBottomTabNavigator = () => {
       <Tab.Screen
         name="Home"
         component={HomeScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Weight"
+        component={WeightScreen}
         options={{
           headerShown: false,
         }}
