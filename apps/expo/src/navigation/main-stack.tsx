@@ -18,7 +18,7 @@ const DrawerNavigator = () => {
     <Drawer.Navigator
       screenOptions={{
         swipeEnabled: true,
-        swipeEdgeWidth: 1000,
+        swipeEdgeWidth: 500,
         headerShown: false,
       }}
       drawerContent={(props) => <Sidebar {...props} />}
@@ -33,15 +33,25 @@ const MainStackNavigator = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
+        // gestureEnabled: true,
+        fullScreenGestureEnabled: true,
+        gestureDirection: "horizontal",
       }}
     >
       <Stack.Screen name="Tabs" component={MainBottomTabNavigator} />
       <Stack.Screen
         name="Exercise"
         component={ExerciseScreen}
-        options={{
+        // Dynamically update title of header!
+        options={({ route }) => ({
           headerShown: true,
-        }}
+          title: route.params?.title,
+        })}
+
+        // options={{
+        //   headerShown: true,
+        //   title: "arm",
+        // }}
       />
     </Stack.Navigator>
   );
