@@ -7,6 +7,7 @@ declare global {
 }
 
 export type RootStackParamList = {
+  navigate(arg0: string): unknown;
   Root: undefined;
   SignUp: undefined;
   SignIn: undefined;
@@ -18,6 +19,7 @@ export type RootStackParamList = {
   Home: undefined;
   Auth: undefined;
   Tabs: undefined;
+  Exercise: { id: string; title: string } | undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
