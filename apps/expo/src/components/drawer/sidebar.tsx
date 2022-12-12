@@ -75,6 +75,13 @@ const Sidebar = (props: DrawerContentComponentProps) => {
         >
           Profile
         </MenuButton>
+        <MenuButton
+          active={currentRoute === "Workout"}
+          onPress={handlePressMenuProfile}
+          icon="user"
+        >
+          Workout
+        </MenuButton>
       </VStack>
       <Center>
         <ThemeToggle />

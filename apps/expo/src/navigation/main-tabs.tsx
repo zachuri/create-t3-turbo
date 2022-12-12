@@ -7,6 +7,7 @@ import { TaskScreen } from "../screens/task-screen";
 import AnimatedColorBox from "../components/animated-color-box";
 import { useColorModeValue } from "native-base";
 import { WeightScreen } from "../screens/weight-screen";
+import WorkoutScreen from "../screens/workout-screen";
 
 const Tab = createBottomTabNavigator();
 
@@ -28,6 +29,10 @@ export const MainBottomTabNavigator = () => {
           } else if (route.name === "Weight") {
             if (focused) return <Solid.ScaleIcon color={color} size={28} />;
             return <Outline.ScaleIcon color={color} size={size} />;
+          } else if (route.name === "Workout") {
+            if (focused)
+              return <Solid.RectangleStackIcon color={color} size={28} />;
+            return <Outline.RectangleStackIcon color={color} size={size} />;
           }
         },
 
@@ -44,6 +49,13 @@ export const MainBottomTabNavigator = () => {
       })}
     >
       <Tab.Screen
+        name="Weight"
+        component={WeightScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
         name="Task"
         component={TaskScreen}
         options={{
@@ -58,8 +70,8 @@ export const MainBottomTabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Weight"
-        component={WeightScreen}
+        name="Workout"
+        component={WorkoutScreen}
         options={{
           headerShown: false,
         }}

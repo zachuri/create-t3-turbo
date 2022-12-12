@@ -3,8 +3,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { MainBottomTabNavigator } from "./main-tabs";
 import Sidebar from "../components/drawer/sidebar";
+import { ExerciseScreen } from "../screens/exercise-screen";
+import { RootStackParamList } from "../types/navigation";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 const Drawer = createDrawerNavigator();
 
 const Main = () => {
@@ -34,6 +36,13 @@ const MainStackNavigator = () => {
       }}
     >
       <Stack.Screen name="Tabs" component={MainBottomTabNavigator} />
+      <Stack.Screen
+        name="Exercise"
+        component={ExerciseScreen}
+        options={{
+          headerShown: true,
+        }}
+      />
     </Stack.Navigator>
   );
 };
